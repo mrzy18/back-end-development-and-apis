@@ -12,6 +12,33 @@ app.get("/", (_req, res) => {
 });
 
 // Do not change code above this line
+app.get("/api", (req, res) => {
+  res.json({
+    unix: Date.now(),
+    utc: new Date(Date.now()).toUTCString()
+  })
+})
+app.get("/api/:date", (req, res) => {
+  const { date } = req.params
+  function cekTanggalValid(inputString) {
+  if (/^\d+$/.test(inputString)) {
+    const timestamp = parseInt(inputString, 10);
+    return !isNaN(new Date(timestamp).getTime());
+  }
+  return !isNaN(new Date(inputString).getTime());
+  }
+  if(!cekTanggalValid(date)){
+    res.json({
+      error: "Invalid Date"
+    })
+    
+  }
+  const response = {
+    unix: /^\d+$/.test(date) ? parseInt(date) : new Date(date).getTime(),
+    utc: /^\d+$/.test(date) ? new Date(parseInt(date)).toUTCString() : new Date(date).toUTCString()
+    }
+  res.json(response)
+})
 
 // Do not change code below this line
 
