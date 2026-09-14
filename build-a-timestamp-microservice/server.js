@@ -31,7 +31,7 @@ app.get("/api/:date", (req, res) => {
     res.json({
       error: "Invalid Date"
     })
-    
+    return
   }
   const response = {
     unix: /^\d+$/.test(date) ? parseInt(date) : new Date(date).getTime(),
